@@ -1,0 +1,71 @@
+{
+    "template" : "log_index_*",
+    "settings": {
+        "index": {
+            "number_of_shards": 1,
+            "number_of_replicas": 0
+        }
+    },
+    "mappings": {
+        "LogEvent": {
+            "_timestamp" : {
+                "enabled" : true,
+                "path" : "@timestamp"
+            },
+            "properties": {
+               "Message" : {
+                    "type":"string",
+                    "index": "analyzed"
+                },
+                "@timestamp" : {
+                    "type":"date"
+                },
+                "MessageObject": {
+                    "type": "object"
+                },
+                "Exception": {
+                    "type": "string"
+                },
+                "ExceptionString": {
+                    "type": "object"
+                },
+                "LoggerName": {
+                    "type": "string"
+                },
+                "AppDomain": {
+                    "type": "string"
+                },
+                "Identity": {
+                    "type": "string"
+                },
+                "Level": {
+                    "type": "string"
+                },
+                "ClassName": {
+                    "type": "string"
+                },
+                "FileName": {
+                    "type": "string"
+                },
+                "FullInfo": {
+                    "type": "string"
+                },
+                "MethodName": {
+                    "type": "string"
+                },
+                "LineNumber": {
+                    "type": "string"
+                },
+                "UserName": {
+                    "type": "string"
+                },
+                "ThreadName": {
+                    "type": "string"
+                },
+                "HostName": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
