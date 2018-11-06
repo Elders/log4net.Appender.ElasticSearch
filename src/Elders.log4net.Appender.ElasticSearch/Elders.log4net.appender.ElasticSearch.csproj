@@ -38,5 +38,4 @@
     <PackageReference Include="RestSharp" Version="106.5.2" />
     <PackageReference Include="SourceLink.Create.CommandLine" Version="2.8.2" PrivateAssets="All" />
   </ItemGroup>
-
 </Project>

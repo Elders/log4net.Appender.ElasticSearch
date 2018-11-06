@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2003
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "log4net.appender.ElasticSearch", "log4net.Appender.ElasticSearch\log4net.appender.ElasticSearch.csproj", "{22964CB0-8A39-41EA-807D-B5216D27DF70}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elders.log4net.appender.ElasticSearch", "Elders.log4net.Appender.ElasticSearch\Elders.log4net.appender.ElasticSearch.csproj", "{22964CB0-8A39-41EA-807D-B5216D27DF70}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
