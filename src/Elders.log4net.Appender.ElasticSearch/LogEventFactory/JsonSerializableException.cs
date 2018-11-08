@@ -1,47 +1,73 @@
 using System;
+using System.Runtime.Serialization;
 
 namespace log4net.Appender.ElasticSearch.LogEventFactory
 {
-    /// <summary>
-    /// JsonSerializableException.
-    /// Ported from jptoto's log4stash
-    /// </summary>
-    public class JsonSerializableException
+    [DataContract(Name = "c3ca519f-5ee8-460e-8f7b-c8a84d2fd191")]
+    public class SerializableException : Exception
     {
-        public int HResult { get; set; }
-        public string Type { get; set; }
-        public string Message { get; set; }
-        public string HelpLink { get; set; }
-        public string Source { get; set; }
-        public string StackTrace { get; set; }
-        public string TargetSite { get; set; }
-        public System.Collections.IDictionary Data { get; set; }
-        public JsonSerializableException InnerException { get; set; }
+        SerializableException() { }
 
-        public static JsonSerializableException Create(Exception exception)
+        public SerializableException(Exception ex)
         {
-            if (exception == null)
-                return null;
+            ExType = ex.GetType();
+            ExMessage = ex.Message;
+            ExStackTrace = ex.StackTrace;
+            ExSource = ex.Source;
+            ExHelpLink = ex.HelpLink;
 
-            var serializable = new JsonSerializableException
-            {
-#if NET45
-                HResult = exception.HResult,
-#endif
-                Type = exception.GetType().FullName,
-                Message = exception.Message,
-                HelpLink = exception.HelpLink,
-                Source = exception.Source,
-                StackTrace = exception.StackTrace,
-                TargetSite = exception.TargetSite != null ? exception.TargetSite.ToString() : null,
-                Data = exception.Data
-            };
+            if (ex.InnerException != null)
+                ExInnerException = new SerializableException(ex.InnerException);
+        }
 
-            if (exception.InnerException != null)
-            {
-                serializable.InnerException = JsonSerializableException.Create(exception.InnerException);
-            }
-            return serializable;
+        /// <summary>
+        /// Serialization constructor.
+        /// </summary>
+        protected SerializableException(SerializationInfo info, StreamingContext context)
+            : base(info, context)
+        { }
+
+        [DataMember(Order = 1)]
+        public Type ExType { get; private set; }
+
+        [DataMember(Order = 2)]
+        public string ExMessage { get; private set; }
+
+        [DataMember(Order = 3)]
+        public string ExStackTrace { get; private set; }
+
+        [DataMember(Order = 4)]
+        public string ExSource { get; private set; }
+
+        [DataMember(Order = 5)]
+        public string ExHelpLink { get; private set; }
+
+        [DataMember(Order = 100)]
+        public SerializableException ExInnerException { get; private set; }
+
+        public override string ToString()
+        {
+            return ToString(true, true);
+        }
+
+        private String ToString(bool needFileLineInfo, bool needMessage)
+        {
+            String message = (needMessage ? Message : null);
+            String result;
+
+            if (message == null || message.Length <= 0)
+                result = ExType.FullName;
+            else
+                result = ExType.FullName + ": " + ExMessage;
+
+            if (ExInnerException != null)
+                result = result + " ---> " + ExInnerException.ToString(needFileLineInfo, needMessage) + Environment.NewLine + "   --- End of inner exception stack trace ---";
+
+            string stackTrace = ExStackTrace;
+            if (!String.IsNullOrEmpty(stackTrace))
+                result += Environment.NewLine + stackTrace;
+
+            return result;
         }
     }
 }

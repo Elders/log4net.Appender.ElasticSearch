@@ -99,7 +99,7 @@ namespace log4net.Appender.ElasticSearch.LogEventFactory
                     var exceptionObject = loggingEvent.MessageObject as Exception;
                     if (exceptionObject != null)
                     {
-                        resultDictionary["MessageObject"] = JsonSerializableException.Create(exceptionObject);
+                        resultDictionary["MessageObject"] = new SerializableException(exceptionObject);
                     }
                     else
                     {
@@ -121,10 +121,10 @@ namespace log4net.Appender.ElasticSearch.LogEventFactory
                 if (!string.IsNullOrEmpty(exceptionString))
                 {
                     resultDictionary["Exception"] = exceptionString;
-                    
+
                     if (SerializeObjects && exception != null)
                     {
-                        resultDictionary["ExceptionObject"] = JsonSerializableException.Create(exception);
+                        resultDictionary["ExceptionObject"] = new SerializableException(exception);
                     }
                 }
             }
