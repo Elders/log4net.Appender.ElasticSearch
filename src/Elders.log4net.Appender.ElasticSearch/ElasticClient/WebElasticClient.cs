@@ -106,10 +106,12 @@ namespace log4net.Appender.ElasticSearch.ElasticClient
                 { "_index", operation.IndexName },
                 { "_type", operation.IndexType },
             };
-            var paramStrings = indexParams.Where(kv => kv.Value != null)
-                .Select(kv => string.Format(@"""{0}"" : ""{1}""", kv.Key, kv.Value));
-            var documentMetadata = string.Join(",", paramStrings.ToArray());
-            sb.AppendFormat(@"{{ ""index"" : {{ {0} }} }}", documentMetadata);
+            var paramStrings = indexParams
+                .Where(kv => kv.Value != null)
+                .Select(kv => $"\"{kv.Key}\" : \"{kv.Value}\"");
+
+            var documentMetadata = string.Join(",", paramStrings);
+            sb.Append($"{{ \"index\" : {{ {documentMetadata} }} }}");
             sb.Append("\n");
         }
 
