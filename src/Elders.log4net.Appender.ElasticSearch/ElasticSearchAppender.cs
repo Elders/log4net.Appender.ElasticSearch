@@ -25,15 +25,6 @@ namespace log4net.Appender.ElasticSearch
         public FixFlags FixedFields { get; set; }
         public bool SerializeObjects { get; set; }
 
-        [Obsolete]
-        public string DocumentIdSource
-        {
-            set
-            {
-                IndexOperationParams.AddParameter(new IndexOperationParam("_id", string.Format("{0}{1}{2}", "%{", value, "}")));
-            }
-        }
-
         public IndexOperationParamsDictionary IndexOperationParams { get; set; }
         public int BulkSize { get; set; }
         public int BulkIdleTimeout { get; set; }
@@ -60,10 +51,6 @@ namespace log4net.Appender.ElasticSearch
         public ElasticAppenderFilters ElasticFilters { get; set; }
         public ILogEventFactory LogEventFactory { get; set; }
         public bool DropEventsOverBulkLimit { get; set; }
-        [Obsolete]
-        public string BasicAuthUsername { get; set; }
-        [Obsolete]
-        public string BasicAuthPassword { get; set; }
 
         public string IndexName
         {
@@ -108,7 +95,6 @@ namespace log4net.Appender.ElasticSearch
         public override void ActivateOptions()
         {
             AddOptionalServer();
-            CheckObsoleteAuth();
             _client = new WebElasticClient(Servers, ElasticSearchTimeout, Ssl, AllowSelfSignedServerCert);
 
             LogEventFactory.Configure(this);
@@ -129,13 +115,6 @@ namespace log4net.Appender.ElasticSearch
             {
                 var serverData = new ServerData { Address = Server, Port = Port, Path = Path };
                 Servers.Add(serverData);
-            }
-        }
-        private void CheckObsoleteAuth()
-        {
-            if (!string.IsNullOrEmpty(BasicAuthUsername) && !string.IsNullOrEmpty(BasicAuthPassword))
-            {
-                LogLog.Warn(GetType(), "BasicAuthUsername & BasicAuthPassword tags are obsolete, Please use AuthenticationMethod new tag");
             }
         }
 
