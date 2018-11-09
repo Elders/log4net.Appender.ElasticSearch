@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 
 namespace log4net.Appender.ElasticSearch.LogEventFactory
 {
-    [DataContract(Name = "c3ca519f-5ee8-460e-8f7b-c8a84d2fd191")]
+    [DataContract(Name = "c60a96fe-1d5e-490f-b193-78e1f8931b2d")]
     public class SerializableException : Exception
     {
         SerializableException() { }
