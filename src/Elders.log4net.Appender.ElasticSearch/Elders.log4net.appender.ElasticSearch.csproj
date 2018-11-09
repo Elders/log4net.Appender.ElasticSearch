@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>log4net.Appender.ElasticSearch</RootNamespace>
   </PropertyGroup>
 
   <!--Nuget-->
@@ -22,14 +23,9 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <DefineConstants>TRACE;DEBUG</DefineConstants>
-  </PropertyGroup>
-
-  <PropertyGroup>
     <DebugType>portable</DebugType>
     <DebugSymbols>true</DebugSymbols>
     <EmbedSources>true</EmbedSources>
-    <RootNamespace>log4net.Appender.ElasticSearch</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
