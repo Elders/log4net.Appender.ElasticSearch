@@ -51,11 +51,12 @@ namespace log4net.Appender.ElasticSearch
         public ElasticAppenderFilters ElasticFilters { get; set; }
         public ILogEventFactory LogEventFactory { get; set; }
         public bool DropEventsOverBulkLimit { get; set; }
+        public string DatePostfixFormat { get; set; }
 
         public string IndexName
         {
-            set { _indexName = value; }
-            get { return _indexName.ToString(); }
+            set { _indexName = $"{value}-{DateTime.Now.ToString(DatePostfixFormat)}"; }
+            get { return _indexName; }
         }
 
         public string IndexType
@@ -78,7 +79,8 @@ namespace log4net.Appender.ElasticSearch
 
             Servers = new ServerDataCollection();
             ElasticSearchTimeout = 10000;
-            IndexName = "LogEvent-%{+yyyy.MM.dd}";
+            DatePostfixFormat = "yyyy.MM.dd";
+            IndexName = $"LogEvent-{DatePostfixFormat}";
             IndexType = "LogEvent";
             IndexAsync = true;
             Template = null;
