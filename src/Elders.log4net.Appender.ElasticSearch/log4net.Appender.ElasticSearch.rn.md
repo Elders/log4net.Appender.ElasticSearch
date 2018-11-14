@@ -1,3 +1,6 @@
+#### 0.1.4 - 14.11.2018
+* Added Rolling by Day for the index name
+
 #### 0.1.3 - 11.11.2018
 * Downgrades RestSharp to v16.3.1 because of a breaking changes => https://github.com/restsharp/RestSharp/issues/1198
 
