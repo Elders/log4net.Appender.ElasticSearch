@@ -166,7 +166,6 @@ namespace log4net.Appender.ElasticSearch.ElasticClient
             {
                 LogLog.Error(GetType(), "Got error while reading response from ElasticSearch", ex);
             }
-
         }
 
         private bool AcceptSelfSignedServerCertCallback(
@@ -193,7 +192,7 @@ namespace log4net.Appender.ElasticSearch.ElasticClient
 
         private static void CheckResponse(IRestResponse response)
         {
-            if (response == null)
+            if (response is null)
             {
                 return;
             }
@@ -201,11 +200,12 @@ namespace log4net.Appender.ElasticSearch.ElasticClient
             var stringResponse = response.Content;
             var jsonResponse = JsonConvert.DeserializeObject<PartialElasticResponse>(stringResponse);
 
+            if (jsonResponse is null) LogLog.Error(typeof(WebElasticClient), "Unable to deserialize to PartialElasticResponse: " + stringResponse);
+
             bool responseHasError = jsonResponse.Errors || response.StatusCode != HttpStatusCode.OK;
             if (responseHasError)
             {
-                throw new InvalidOperationException(
-                    string.Format("Some error occurred while sending request to Elasticsearch.{0}{1}",
+                throw new InvalidOperationException(string.Format("Some error occurred while sending request to Elasticsearch.{0}{1}",
                         Environment.NewLine, stringResponse));
             }
         }
