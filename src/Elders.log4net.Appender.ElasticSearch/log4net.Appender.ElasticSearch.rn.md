@@ -1,3 +1,6 @@
+#### 0.1.5 - 12.11.2018
+* Adds a check for the JsonResponse
+
 #### 0.1.4 - 14.11.2018
 * Added Rolling by Day for the index name
 
