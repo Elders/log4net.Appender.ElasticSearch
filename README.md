@@ -37,7 +37,7 @@ You can also set any public property in the appender/filter which didn't appear 
 
 ##### Simple configuration:
 ```xml
-<appender name="ElasticSearchAppender" type="log4stash.ElasticSearchAppender, log4stash">
+<appender name="ElasticSearchAppender" type="log4net.Appender.ElasticSearch.ElasticSearchAppender, log4net.Appender.ElasticSearch">
     <Server>localhost</Server>
     <Port>9200</Port>
     <ElasticFilters>
@@ -49,7 +49,7 @@ You can also set any public property in the appender/filter which didn't appear 
 
 ##### (Almost) Full configuration:
 ```xml
-<appender name="ElasticSearchAppender" type="log4stash.ElasticSearchAppender, log4stash">
+<appender name="ElasticSearchAppender" type="log4net.Appender.ElasticSearch.ElasticSearchAppender, log4net.Appender.ElasticSearch">
     <Server>localhost</Server>
     <Port>9200</Port>
     <!-- optional: in case elasticsearch is located behind a reverse proxy the URL is like http://Server:Port/Path, default = empty string -->
